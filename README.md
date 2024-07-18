@@ -119,6 +119,4 @@ pip install Flask pandas
 - Make sure to adjust the `optimize` function in `main.py` according to your specific needs.
 - Ensure the `code` directory is writable by the application.
 - Update the `<repository-url>` in the setup instructions with the actual URL of your repository.
-```
 
-This README file now includes a detailed summary of the `main.py` file, providing a comprehensive guide to setting up, running, and using your Flask application.
