@@ -1,9 +1,6 @@
-Here's the README file for your Flask application:
+# Code Optimization
 
-```markdown
-# Flask File Upload and Optimization
-
-This Flask application allows users to upload Python files, optimize their content using an `optimize` function, and return the optimized file along with logging and cost information.
+This Flask application allows users to upload Python files, optimize their content using Autogen, and return the optimized file along with logging and cost information.
 
 ## Setup and Installation
 
@@ -116,4 +113,4 @@ pip install Flask pandas
 - Update the `<repository-url>` in the setup instructions with the actual URL of your repository.
 ```
 
-This README file provides a comprehensive guide to setting up, running, and using your Flask application, along with a brief overview of the code and its functionalities. Adjust the `<repository-url>` with the actual URL of your repository.
+Feel free to adjust the details as needed for your specific project setup!
