@@ -1,6 +1,6 @@
-# Code Optimization
+# Code Optimization Autogen
 
-This Flask application allows users to upload Python files, optimize their content using Autogen, and return the optimized file along with logging and cost information.
+This Flask application allows users to upload Python files, optimize their content using an `optimize` function, and return the optimized file along with logging and cost information.
 
 ## Setup and Installation
 
@@ -69,7 +69,15 @@ curl -X POST -F 'file=@path/to/your/file.py' http://127.0.0.1:5000/upload -o opt
 
 ### `main.py`
 
-- Contains the `optimize` function which initiates the optimization process using agents.
+- **Importing Required Libraries**: Imports the `autogen` library.
+- **Loading Configuration**: Loads configuration settings for the agents from `OAI_CONFIG_LIST.json`.
+- **Setting LLM Configuration**: Configures settings for the large language model (LLM) agents, including cache seed, temperature, and timeout.
+- **Starting Runtime Logging**: Initiates logging to record the optimization process, storing logs in `logs.db`.
+- **Setting Up Agents**:
+  - **Executor Agent**: Executes the provided code and suggests updates if there are errors.
+  - **Optimizer Agent**: Optimizes the Python code, following good coding practices and eliminating redundancy.
+- **Group Chat and Manager Setup**: Creates a group chat for interaction between the `Executor` and `Optimizer` agents, managed by a `GroupChatManager`.
+- **Optimize Function**: Initiates the optimization process, starts a chat session with the agents, and returns the logging session ID.
 
 ### `autogen_logs.py`
 
@@ -113,4 +121,4 @@ pip install Flask pandas
 - Update the `<repository-url>` in the setup instructions with the actual URL of your repository.
 ```
 
-Feel free to adjust the details as needed for your specific project setup!
+This README file now includes a detailed summary of the `main.py` file, providing a comprehensive guide to setting up, running, and using your Flask application.
