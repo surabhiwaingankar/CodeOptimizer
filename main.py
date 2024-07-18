@@ -1,6 +1,5 @@
 import autogen
 
-
 config_list = autogen.config_list_from_json(
     env_or_file="OAI_CONFIG_LIST.json",
 )
@@ -12,7 +11,7 @@ llm_config = {
     "timeout": 120,
 }
 
-logging_session_id = autogen.runtime_logging.start(logger_type="file", config={"filename": "runtime.log"})
+logging_session_id = autogen.runtime_logging.start(config={"dbname": "logs.db"})
 print("Logging session ID: " + str(logging_session_id))
 
 executor = autogen.UserProxyAgent(
@@ -57,4 +56,4 @@ def optimize(file_content):
     message= file_content
 )
     autogen.runtime_logging.stop()
-    return
+    return logging_session_id

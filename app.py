@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, after_this_request
 import os
-from main import optimize  # Assuming optimize function is defined in main module
-import time
+from main import optimize 
+from autogen_logs import calculate_costs
 
 app = Flask(__name__)
 
@@ -27,24 +27,26 @@ def upload_file():
         with open(file_path, 'r') as f:
             file_content = f.read()
         
-        # Call optimize function asynchronously
-        optimize(file_content)
+        logging_session_id = optimize(file_content)
+        (total_tokens, total_cost), (session_tokens, session_cost) = calculate_costs(logging_session_id)
         
-        # Wait for optimized.py to be created
-        wait_time = 0
-        max_wait_time = 10  # Maximum time to wait in seconds
         new_file_path = "code/optimized.py"
         
-        while not os.path.exists(new_file_path) and wait_time < max_wait_time:
-            time.sleep(1)
-            wait_time += 1
-        
         if os.path.exists(new_file_path):
-            # Send file as attachment
-            return send_file(new_file_path, as_attachment=True), 200
+            @after_this_request
+            def add_headers(response):
+                response.headers['logging_session_id'] = logging_session_id
+                response.headers['total_tokens'] = str(total_tokens)
+                response.headers['total_cost'] = str(total_cost)
+                response.headers['session_tokens'] = str(session_tokens)
+                response.headers['session_cost'] = str(session_cost)
+                return response
+            
+            response = send_file(new_file_path, as_attachment=True)
+            response.status_code = 200
+            return response
         else:
             return jsonify({"error": "Failed to optimize file"}), 500
-        
     else:
         return jsonify({"error": "Invalid file type. Only .py files are allowed."}), 400
 

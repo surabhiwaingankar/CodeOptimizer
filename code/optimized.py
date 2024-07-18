@@ -2,7 +2,7 @@
 
 def divide_numbers(a: float, b: float) -> float:
     """
-    Divide two numbers and handle division by zero.
+    Divides two numbers and handles division by zero.
 
     Parameters:
     a (float): The numerator.
